@@ -1,0 +1,5 @@
+{
+    "python.defaultInterpreterPath": "/workspaces/llm-zoomcamp-2026-code/.venv/bin/python",
+    "jupyter.kernels.filter": [],
+    "jupyter.serverUri": "http://localhost:8888/"
+}
