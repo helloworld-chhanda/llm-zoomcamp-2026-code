@@ -1,0 +1,128 @@
+======================================================================
+Q1-Q3: Running traced RAG with ConsoleSpanExporter
+======================================================================
+{
+    "name": "search",
+    "context": {
+        "trace_id": "0xeb6964f4cc86a3f92ad6d39c0a4ec341",
+        "span_id": "0x2ef734a673fe3c64",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0xaa97ac9cc6677262",
+    "start_time": "2026-07-20T19:49:05.146654Z",
+    "end_time": "2026-07-20T19:49:05.147456Z",
+    "status": {
+        "status_code": "UNSET"
+    },
+    "attributes": {
+        "num_results": 5
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "telemetry.sdk.language": "python",
+            "telemetry.sdk.name": "opentelemetry",
+            "telemetry.sdk.version": "1.44.0",
+            "service.instance.id": "bd7ed2ca-4693-4424-ad04-f4b496aa1c8d",
+            "service.name": "unknown_service"
+        },
+        "schema_url": ""
+    }
+}
+{
+    "name": "llm",
+    "context": {
+        "trace_id": "0xeb6964f4cc86a3f92ad6d39c0a4ec341",
+        "span_id": "0xd4911e5ace4db50e",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0xaa97ac9cc6677262",
+    "start_time": "2026-07-20T19:49:05.147746Z",
+    "end_time": "2026-07-20T19:49:11.865464Z",
+    "status": {
+        "status_code": "UNSET"
+    },
+    "attributes": {
+        "input_tokens": 7112,
+        "output_tokens": 295,
+        "cost": 0.0012438
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "telemetry.sdk.language": "python",
+            "telemetry.sdk.name": "opentelemetry",
+            "telemetry.sdk.version": "1.44.0",
+            "service.instance.id": "bd7ed2ca-4693-4424-ad04-f4b496aa1c8d",
+            "service.name": "unknown_service"
+        },
+        "schema_url": ""
+    }
+}
+{
+    "name": "rag",
+    "context": {
+        "trace_id": "0xeb6964f4cc86a3f92ad6d39c0a4ec341",
+        "span_id": "0xaa97ac9cc6677262",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": null,
+    "start_time": "2026-07-20T19:49:05.146617Z",
+    "end_time": "2026-07-20T19:49:11.865809Z",
+    "status": {
+        "status_code": "UNSET"
+    },
+    "attributes": {},
+    "events": [],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "telemetry.sdk.language": "python",
+            "telemetry.sdk.name": "opentelemetry",
+            "telemetry.sdk.version": "1.44.0",
+            "service.instance.id": "bd7ed2ca-4693-4424-ad04-f4b496aa1c8d",
+            "service.name": "unknown_service"
+        },
+        "schema_url": ""
+    }
+}
+
+Answer: The agentic loop keeps calling the model until it stops by using a `while` loop in which it continuously processes responses from the model. Here's a breakdown of how it works:
+
+1. **Initial Setup**:  ...
+
+(Inspect the ReadableSpan dicts printed above to answer Q1 [span count], Q2 [llm span's input_tokens attribute], and Q3 [search vs llm span duration])
+
+======================================================================
+Q4: Re-running the query with the SQLite exporter
+======================================================================
+Span names in the spans table: ['llm', 'rag', 'search']
+
+======================================================================
+Q5: Total duration by span name (excluding 'rag')
+======================================================================
+name
+llm       7415.671
+search       1.262
+Name: duration_ms, dtype: float64
+
+Span type with most total time: llm
+
+======================================================================
+Q6: Running the same query 3 more times for token-stability check
+======================================================================
+Input tokens across 4 runs: [7112, 7112, 7112, 7112]
+Min: 7112, Max: 7112, variance: 0.00%
+
+======================================================================
+SUMMARY
+======================================================================
+Q1-Q3: see console span output above
+Q4. Span names in SQLite: ['llm', 'rag', 'search']
+Q5. Span type with most total time (excl. rag): llm
+Q6. Input token variance across 4 runs: 0.00% -> They're identical
